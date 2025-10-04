@@ -59,3 +59,13 @@ npm run build
 - Replace gallery images with your own
 - Update address and map location in `Contact.jsx`
 
+## Deploy to Netlify
+
+- Push your code to GitHub (already done: `main`)
+- On Netlify, create a new site from Git
+  - Repo: MinhVu2501/Brew-Chill
+  - Build command: `npm run build`
+  - Publish directory: `dist`
+- For SPA routing, we include `public/_redirects` and `netlify.toml`.
+- After deploy, you can set a custom domain in Netlify Site settings.
+
