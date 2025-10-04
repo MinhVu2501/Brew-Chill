@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+  const formspreeId = import.meta.env.VITE_FORMSPREE_ID || 'yourFormId'
 
   return (
     <div>
@@ -16,9 +18,26 @@ function Contact() {
         <div>
           <form
             className="space-y-4"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault()
-              setSubmitted(true)
+              setError('')
+              const form = e.currentTarget
+              const data = new FormData(form)
+              try {
+                const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+                  method: 'POST',
+                  headers: { 'Accept': 'application/json' },
+                  body: data,
+                })
+                if (res.ok) {
+                  setSubmitted(true)
+                  form.reset()
+                } else {
+                  setError('Submission failed. Please try again later.')
+                }
+              } catch (err) {
+                setError('Network error. Please try again later.')
+              }
             }}
           >
             <div>
@@ -37,13 +56,19 @@ function Contact() {
             {submitted && (
               <p className="text-green-700">Thanks! We will get back to you soon.</p>
             )}
+            {!submitted && formspreeId === 'yourFormId' && (
+              <p className="text-xs text-neutral-600">Tip: Set VITE_FORMSPREE_ID in your environment to enable form submissions.</p>
+            )}
+            {error && (
+              <p className="text-red-700">{error}</p>
+            )}
           </form>
         </div>
         <div>
           <div className="aspect-video w-full overflow-hidden rounded-md border">
             <iframe
               title="Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0193823941946!2d-122.419415!3d37.774929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808c7e2f1b7f%3A0x4b0b1dbd2e2e2e2e!2sCoffee%20Shop!5e0!3m2!1sen!2sus!4v1610000000000!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0193823941946!2d-122.419415!3d37.774929!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809caaaaaaab%3A0xbadf00d0badf00d0!2sBrew%20%26%20Chill%20Coffee%20(Example)!5e0!3m2!1sen!2sus!4v1710000000000!5m2!1sen!2sus"
               width="100%"
               height="100%"
               loading="lazy"

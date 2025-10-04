@@ -1,8 +1,16 @@
 import { Link, NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const linkClass = ({ isActive }) =>
     `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -10,7 +18,7 @@ function Navbar() {
     }`
 
   return (
-    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b">
+    <header className={`sticky top-0 z-30 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 ${scrolled ? 'shadow-sm' : 'border-b'}`}>
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2">

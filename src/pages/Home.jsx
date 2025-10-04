@@ -10,14 +10,14 @@ function Home() {
             alt="Coffee background"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
         </div>
-        <div className="mx-auto max-w-6xl px-4 py-28 md:py-36 text-white">
+        <div className="mx-auto max-w-6xl px-4 py-28 md:py-40 text-white">
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">Brew & Chill</h1>
-          <p className="mt-4 max-w-xl text-lg md:text-xl text-neutral-100">Your neighborhood spot for handcrafted coffee and good vibes.</p>
+          <p className="mt-4 max-w-2xl text-lg md:text-xl text-neutral-100">Your neighborhood spot for ethically sourced beans, artisan espresso, and warm hospitality.</p>
           <div className="mt-8 flex items-center gap-3">
-            <Link to="/menu" className="px-5 py-3 rounded-md bg-white text-neutral-900 font-medium hover:bg-neutral-100">View Menu</Link>
-            <Link to="/order" className="px-5 py-3 rounded-md bg-amber-700 text-white font-medium hover:bg-amber-800">Order Pickup</Link>
+            <Link to="/contact" className="px-5 py-3 rounded-md bg-white text-neutral-900 font-medium hover:bg-neutral-100">Visit Us</Link>
+            <Link to="/order" className="px-5 py-3 rounded-md bg-amber-700 text-white font-medium hover:bg-amber-800">Order Now</Link>
           </div>
         </div>
       </section>
@@ -52,6 +52,34 @@ function Home() {
               'https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=1974&auto=format&fit=crop',
             ].map((src) => (
               <img key={src} src={src} alt="Cafe" className="h-36 md:h-48 w-full object-cover rounded-md" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">What our guests say</h2>
+          <div className="mt-8 grid md:grid-cols-3 gap-6">
+            {[
+              {
+                quote: 'Best latte in town and such a cozy vibe. My go-to spot!',
+                name: 'Ava M.',
+              },
+              {
+                quote: 'Friendly staff and the pastries are always fresh and delicious.',
+                name: 'Jacob R.',
+              },
+              {
+                quote: 'I love working from here — fast Wi‑Fi and amazing cold brew.',
+                name: 'Priya S.',
+              },
+            ].map((t) => (
+              <div key={t.name} className="rounded-lg border p-6 bg-white shadow-sm">
+                <div className="text-amber-700">★★★★★</div>
+                <p className="mt-3 text-neutral-700 italic">“{t.quote}”</p>
+                <p className="mt-4 font-medium">{t.name}</p>
+              </div>
             ))}
           </div>
         </div>
